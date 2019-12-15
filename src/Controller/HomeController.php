@@ -14,14 +14,19 @@ class HomeController extends AbstractController
     public function home()
     {
         $user = new User();
+        $user->setNom('tatat');
+        $user->setPrenom('toto');
 
-        $user->setId(100);
-        $user->setNom('Yasmina');
-        $user->setPrenom('IKHLEF');
+        // etape 1: apelle ou service doctrine
+        $em = $this->getDoctrine()->getManager();
+        //etape 2 persister
+        $em->persist($user);
+        // etape 3 pousser en base enregistrer
+       $em->flush();
 
         return $this->render('home/index.html.twig',
             [
-               'utilisateur'=> $user
+                'utilisateur' => $user
             ]
         );
     }
